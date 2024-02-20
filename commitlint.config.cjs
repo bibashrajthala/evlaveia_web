@@ -9,7 +9,5 @@
 // test: Adding missing tests or correcting existing tests
 
 module.exports = {
-    extends: [
-        "@commitlint/config-conventional"
-    ],
-}
+	extends: ['@commitlint/config-conventional'],
+};
