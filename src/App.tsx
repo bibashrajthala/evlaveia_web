@@ -1,13 +1,14 @@
+// css
 import './global.css';
 
-function App() {
+import { Outlet } from 'react-router-dom';
+
+const App = () => {
 	return (
-		<>
-			<h1 className="border border-red-900 text-3xl font-bold underline">
-				Hello world! gg
-			</h1>
-		</>
+		<div className="font- text-black antialiased">
+			<Outlet />
+		</div>
 	);
-}
+};
 
 export default App;
