@@ -58,7 +58,7 @@ const RadioField: React.FC<IRadioFieldProps> = ({
 
 			{/* for error message or helper messages */}
 			<div className="mt-1">
-				{helperText !== '' && <HelperText helperText={helperText} />}
+				{!!helperText && <HelperText helperText={helperText} />}
 				{errors[name] && <ErrorField name={name} />}
 			</div>
 		</fieldset>

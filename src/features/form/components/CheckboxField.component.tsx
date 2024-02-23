@@ -78,7 +78,7 @@ const Checkbox: React.FC<ICheckboxFieldProps> = ({
 								value={value}
 								disabled={disabled}
 								className={cn(
-									'border-gyj-black-500 text-gyj-primary border-solname rounded-sm border bg-white checked:ring-0 focus:ring-0 focus:ring-offset-0'
+									'text-white accent-evl-primary checked:ring-0 focus:ring-0'
 								)}
 								aria-describedby={label}
 							/>
@@ -96,7 +96,7 @@ const Checkbox: React.FC<ICheckboxFieldProps> = ({
 
 			{/* for error message or helper messages */}
 			<div className="mt-1">
-				{helperText !== '' && <HelperText helperText={helperText} />}
+				{!!helperText && <HelperText helperText={helperText} />}
 				{errors[name] && <ErrorField name={name} fieldSize={fieldSize} />}
 			</div>
 		</fieldset>

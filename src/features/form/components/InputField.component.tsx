@@ -76,7 +76,7 @@ const InputField: React.FC<IInputFieldProps> = ({
 					'mt-1': fieldSize === 'default',
 				})}
 			>
-				{helperText !== '' && <HelperText helperText={helperText} />}
+				{!!helperText && <HelperText helperText={helperText} />}
 				{errors[name] && <ErrorField name={name} fieldSize={fieldSize} />}
 			</div>
 		</fieldset>

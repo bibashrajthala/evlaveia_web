@@ -47,7 +47,7 @@ const PasswordField: React.FC<IPasswordFieldProps> = ({
 					id={name}
 					disabled={disabled}
 					className={cn(
-						'border-solname h-11 w-full rounded border-[0.6px] border-evl-black-500 px-2  text-sm shadow-sm placeholder:text-sm placeholder:text-evl-black-500 focus:border focus:border-b-2 focus:border-evl-black-500 focus:border-evl-primary  focus:outline-none focus:ring-0 focus:ring-offset-0',
+						'h-11 w-full rounded border-[0.6px] border-solid border-evl-black-500 px-2  text-sm shadow-sm placeholder:text-sm placeholder:text-evl-black-500 focus:border focus:border-b-2 focus:border-evl-black-500 focus:border-evl-primary  focus:outline-none focus:ring-0 focus:ring-offset-0',
 						{
 							'cursor-not-allowed bg-evl-black-50  focus:border-gray-300 ':
 								disabled,
@@ -60,13 +60,11 @@ const PasswordField: React.FC<IPasswordFieldProps> = ({
 					aria-describedby={name}
 				/>
 
-				{/* if there is no valnameation error show see password toggle button  */}
+				{/* if there is no validation error show see password toggle button  */}
 				{!errors[name] && (
 					<button
-						onClick={(e) => {
-							e.preventDefault();
-							togglePassword();
-						}}
+						type="button"
+						onClick={togglePassword}
 						className=" absolute inset-y-0 right-0 mr-3 flex items-center rounded-lg p-1 outline-none"
 					>
 						{showPassword ? (
@@ -80,7 +78,7 @@ const PasswordField: React.FC<IPasswordFieldProps> = ({
 
 			{/* for error message or helper messages */}
 			<div className="mt-1">
-				{helperText !== '' && <HelperText helperText={helperText} />}
+				{!!helperText && <HelperText helperText={helperText} />}
 				{errors[name] && <ErrorField name={name} />}
 			</div>
 		</fieldset>
