@@ -8,6 +8,7 @@ import {
 	sendPasswordResetEmail,
 	signOut,
 	sendEmailVerification,
+	OAuthProvider,
 } from 'firebase/auth';
 import {
 	getFirestore,
@@ -36,6 +37,29 @@ const signInWithGoogle = async () => {
 				uid: user.uid,
 				name: user.displayName,
 				authProvider: 'google',
+				email: user.email,
+			});
+		}
+		return res.user;
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any
+	} catch (err: any) {
+		// console.error(err);
+		alert(err.message);
+	}
+};
+
+const appleProvider = new OAuthProvider('apple.com');
+const signInWithApple = async () => {
+	try {
+		const res = await signInWithPopup(auth, appleProvider);
+		const user = res.user;
+		const q = query(collection(db, 'users'), where('uid', '==', user.uid));
+		const docs = await getDocs(q);
+		if (docs.docs.length === 0) {
+			await addDoc(collection(db, 'users'), {
+				uid: user.uid,
+				name: user.displayName,
+				authProvider: 'apple',
 				email: user.email,
 			});
 		}
@@ -112,6 +136,7 @@ export {
 	auth,
 	db,
 	signInWithGoogle,
+	signInWithApple,
 	logInWithEmailAndPassword,
 	registerWithEmailAndPassword,
 	sendPasswordResetMail,

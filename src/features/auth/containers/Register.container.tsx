@@ -8,7 +8,10 @@ import AppleIcon from '../../../assets/auth/login/apple.png';
 import RegisterForm from '../components/RegisterForm.component';
 
 // firebase
-import { signInWithGoogle } from '../../firebase/utils/firebase';
+import {
+	signInWithGoogle,
+	signInWithApple,
+} from '../../firebase/utils/firebase';
 
 // context
 import { UserContext } from '../../user/context/User.context';
@@ -21,7 +24,10 @@ const RegisterContainer = () => {
 		if (user) setCurrentUser(user);
 	};
 
-	const handleAppleLogin = () => {};
+	const handleAppleLogin = async () => {
+		const user = await signInWithApple();
+		if (user) setCurrentUser(user);
+	};
 
 	return (
 		<div className="flex min-h-screen items-center justify-center bg-[#f8f8f8] py-20">
