@@ -17,6 +17,7 @@ import Register from '../../auth/containers/Register.container';
 import ForgotPassword from '../../auth/containers/ForgotPassword.container';
 import TermsAndConditions from '../../terms-amd-conditions/containers/TermsAndConditions.container';
 import Home from '../../home/containers/Home.container';
+import EmailSent from '../../email-verification/containers/EmailSent.container';
 
 // router
 export const router = createBrowserRouter([
@@ -46,6 +47,10 @@ export const router = createBrowserRouter([
 							{
 								path: 'terms-and-conditions',
 								element: <TermsAndConditions />,
+							},
+							{
+								path: 'email-sent',
+								element: <EmailSent />,
 							},
 						],
 					},

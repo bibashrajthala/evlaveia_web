@@ -51,12 +51,18 @@ const LoginForm = () => {
 
 	const onSubmit = async (values: TRegisterSchema) => {
 		// console.log('values', values);
-		await registerWithEmailAndPassword(
-			values?.name,
-			values?.email,
-			values?.password
-		);
-		navigate('/home');
+
+		try {
+			const res = await registerWithEmailAndPassword(
+				values?.name,
+				values?.email,
+				values?.password
+			);
+
+			if (res) navigate('/email-sent');
+		} catch (error) {
+			// console.log(error)
+		}
 	};
 	const navigateToTermsAndCondition = () => {
 		navigate('/terms-and-conditions');

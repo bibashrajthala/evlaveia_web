@@ -12,9 +12,10 @@ import Button from '../../resuable/components/Button.component';
 
 const Home = () => {
 	const navigate = useNavigate();
-	const { name } = useContext(UserContext);
+	const { name, setCurrentUser } = useContext(UserContext);
 
 	const handleLogout = async () => {
+		setCurrentUser(null);
 		await logout();
 		navigate('/');
 	};

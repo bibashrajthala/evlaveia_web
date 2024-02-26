@@ -7,6 +7,7 @@ import {
 	createUserWithEmailAndPassword,
 	sendPasswordResetEmail,
 	signOut,
+	sendEmailVerification,
 } from 'firebase/auth';
 import {
 	getFirestore,
@@ -38,6 +39,7 @@ const signInWithGoogle = async () => {
 				email: user.email,
 			});
 		}
+		return res.user;
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	} catch (err: any) {
 		// console.error(err);
@@ -47,7 +49,16 @@ const signInWithGoogle = async () => {
 
 const logInWithEmailAndPassword = async (email: string, password: string) => {
 	try {
-		await signInWithEmailAndPassword(auth, email, password);
+		const res = await signInWithEmailAndPassword(auth, email, password);
+
+		if (!res?.user?.emailVerified) {
+			await sendEmailVerification(res.user);
+			alert('Check you email for email verification');
+			return false;
+		}
+
+		return res.user;
+
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	} catch (err: any) {
 		// console.error(err);
@@ -63,12 +74,18 @@ const registerWithEmailAndPassword = async (
 	try {
 		const res = await createUserWithEmailAndPassword(auth, email, password);
 		const user = res.user;
+
+		await logout();
+
 		await addDoc(collection(db, 'users'), {
 			uid: user.uid,
 			name,
 			authProvider: 'local',
 			email,
 		});
+		await sendEmailVerification(res.user);
+
+		return true;
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	} catch (err: any) {
 		// console.error(err);

@@ -9,12 +9,14 @@ type InitialState = {
 	name: string;
 	user?: User | null;
 	setName: React.Dispatch<React.SetStateAction<string>>;
+	setCurrentUser: React.Dispatch<React.SetStateAction<User | null | undefined>>;
 };
 
 const initialState: InitialState = {
 	name: '',
 	user: null,
 	setName: () => {},
+	setCurrentUser: () => {},
 };
 
 export const UserContext = createContext(initialState);
@@ -29,6 +31,8 @@ const UserContextProvider = ({ children }: UserContextProviderProps) => {
 	const [user, loading] = useAuthState(auth);
 	// const [user, loading, error] = useAuthState(auth);
 
+	const [currentUser, setCurrentUser] = useState<User | null | undefined>(user);
+
 	const loadingContent = (
 		<div className="flex h-screen w-full items-center justify-center text-center">
 			Loading...
@@ -40,7 +44,9 @@ const UserContextProvider = ({ children }: UserContextProviderProps) => {
 	}
 
 	return (
-		<UserContext.Provider value={{ name, user, setName }}>
+		<UserContext.Provider
+			value={{ name, user: currentUser, setName, setCurrentUser }}
+		>
 			{children}
 		</UserContext.Provider>
 	);

@@ -2,6 +2,10 @@ import { FormProvider, useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useNavigate } from 'react-router-dom';
+import { useContext } from 'react';
+
+// context
+import { UserContext } from '../../user/context/User.context';
 
 // firebase
 import { logInWithEmailAndPassword } from '../../firebase/utils/firebase';
@@ -32,6 +36,7 @@ const defaultValues: ILoginSchema = {
 	rememberMe: false,
 };
 const LoginForm = () => {
+	const { setCurrentUser } = useContext(UserContext);
 	const navigate = useNavigate();
 
 	const methods = useForm<ILoginSchema>({
@@ -41,8 +46,15 @@ const LoginForm = () => {
 
 	const onSubmit = async (values: ILoginSchema) => {
 		// console.log('values', values);
-		await logInWithEmailAndPassword(values?.email, values?.password);
-		navigate('/home');
+		const user = await logInWithEmailAndPassword(
+			values?.email,
+			values?.password
+		);
+
+		if (user) {
+			setCurrentUser(user);
+			navigate('/home');
+		}
 	};
 	const handleForgotPassword = () => {
 		navigate('/forgot-password');

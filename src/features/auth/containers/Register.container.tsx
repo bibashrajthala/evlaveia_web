@@ -1,3 +1,5 @@
+import { useContext } from 'react';
+
 // images
 import GoogleIcon from '../../../assets/auth/login/google.png';
 import AppleIcon from '../../../assets/auth/login/apple.png';
@@ -8,9 +10,15 @@ import RegisterForm from '../components/RegisterForm.component';
 // firebase
 import { signInWithGoogle } from '../../firebase/utils/firebase';
 
+// context
+import { UserContext } from '../../user/context/User.context';
+
 const RegisterContainer = () => {
+	const { setCurrentUser } = useContext(UserContext);
+
 	const handleGoogleLogin = async () => {
-		await signInWithGoogle();
+		const user = await signInWithGoogle();
+		if (user) setCurrentUser(user);
 	};
 
 	const handleAppleLogin = () => {};

@@ -35,7 +35,9 @@ const ProtectedRoute = () => {
 	);
 
 	useEffect(() => {
-		user ? fetchUserName(user) : navigate('/', { replace: true });
+		user && user.emailVerified
+			? fetchUserName(user)
+			: navigate('/', { replace: true });
 	}, [user]);
 
 	if (user) return <Outlet />;

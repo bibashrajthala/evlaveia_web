@@ -16,10 +16,10 @@ const PublicRoute = () => {
 	);
 
 	useEffect(() => {
-		if (user) navigate('/home', { replace: true });
+		if (user && user?.emailVerified) navigate('/home', { replace: true });
 	}, [user]);
 
-	if (!user) return <Outlet />;
+	if (!user || !user?.emailVerified) return <Outlet />;
 
 	return <>{loadingContent}</>;
 };
