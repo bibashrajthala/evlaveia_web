@@ -3,6 +3,9 @@ import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useNavigate } from 'react-router-dom';
 
+// firebase
+import { logInWithEmailAndPassword } from '../../firebase/utils/firebase';
+
 // components
 import FormControl from '../../form/components/FormControl.component';
 import Button from '../../resuable/components/Button.component';
@@ -36,8 +39,9 @@ const LoginForm = () => {
 		defaultValues,
 	});
 
-	const onSubmit = (_values: ILoginSchema) => {
+	const onSubmit = async (values: ILoginSchema) => {
 		// console.log('values', values);
+		await logInWithEmailAndPassword(values?.email, values?.password);
 		navigate('/home');
 	};
 	const handleForgotPassword = () => {

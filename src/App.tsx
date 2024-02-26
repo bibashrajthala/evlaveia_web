@@ -3,10 +3,15 @@ import './global.css';
 
 import { Outlet } from 'react-router-dom';
 
+// providers
+import UserContextProvider from './features/user/context/User.context';
+
 const App = () => {
 	return (
 		<div className="font- text-black antialiased">
-			<Outlet />
+			<UserContextProvider>
+				<Outlet />
+			</UserContextProvider>
 		</div>
 	);
 };

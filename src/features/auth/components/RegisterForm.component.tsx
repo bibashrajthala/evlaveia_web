@@ -3,6 +3,8 @@ import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useNavigate } from 'react-router-dom';
 
+import { registerWithEmailAndPassword } from '../../firebase/utils/firebase';
+
 // components
 import FormControl from '../../form/components/FormControl.component';
 import Button from '../../resuable/components/Button.component';
@@ -47,8 +49,13 @@ const LoginForm = () => {
 		defaultValues,
 	});
 
-	const onSubmit = (_values: TRegisterSchema) => {
+	const onSubmit = async (values: TRegisterSchema) => {
 		// console.log('values', values);
+		await registerWithEmailAndPassword(
+			values?.name,
+			values?.email,
+			values?.password
+		);
 		navigate('/home');
 	};
 	const navigateToTermsAndCondition = () => {

@@ -5,8 +5,13 @@ import AppleIcon from '../../../assets/auth/login/apple.png';
 // components
 import LoginForm from '../components/LoginForm.component';
 
+// firebase
+import { signInWithGoogle } from '../../firebase/utils/firebase';
+
 const LoginContainer = () => {
-	const handleGoogleLogin = () => {};
+	const handleGoogleLogin = async () => {
+		await signInWithGoogle();
+	};
 	const handleAppleLogin = () => {};
 
 	return (

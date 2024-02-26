@@ -2,6 +2,9 @@ import { FormProvider, useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 
+// firebase
+import { sendPasswordResetMail } from '../../firebase/utils/firebase';
+
 // components
 import FormControl from '../../form/components/FormControl.component';
 import Button from '../../resuable/components/Button.component';
@@ -28,8 +31,9 @@ const ForgotPasswordForm = () => {
 		defaultValues,
 	});
 
-	const onSubmit = (_values: IForgotPasswordValidationSchema) => {
+	const onSubmit = async (values: IForgotPasswordValidationSchema) => {
 		// console.log('values', values);
+		await sendPasswordResetMail(values?.email);
 	};
 	return (
 		<div>
