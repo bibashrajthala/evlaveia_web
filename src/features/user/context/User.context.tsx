@@ -1,4 +1,4 @@
-import { ReactNode, createContext, useState } from 'react';
+import { ReactNode, createContext, useEffect, useState } from 'react';
 
 // firebase
 import { auth } from '../../firebase/utils/firebase';
@@ -32,6 +32,10 @@ const UserContextProvider = ({ children }: UserContextProviderProps) => {
 	// const [user, loading, error] = useAuthState(auth);
 
 	const [currentUser, setCurrentUser] = useState<User | null | undefined>(user);
+
+	useEffect(() => {
+		if (user) setCurrentUser(user);
+	}, [user]);
 
 	const loadingContent = (
 		<div className="flex h-screen w-full items-center justify-center text-center">

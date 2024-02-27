@@ -2,7 +2,7 @@ import { FormProvider, useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useNavigate } from 'react-router-dom';
-import { useContext } from 'react';
+import { useContext, useState } from 'react';
 
 // context
 import { UserContext } from '../../user/context/User.context';
@@ -39,21 +39,31 @@ const LoginForm = () => {
 	const { setCurrentUser } = useContext(UserContext);
 	const navigate = useNavigate();
 
+	const [isLoading, setIsLoading] = useState(false);
+
 	const methods = useForm<ILoginSchema>({
 		resolver: zodResolver(loginSchema),
 		defaultValues,
 	});
 
 	const onSubmit = async (values: ILoginSchema) => {
-		// console.log('values', values);
-		const user = await logInWithEmailAndPassword(
-			values?.email,
-			values?.password
-		);
+		setIsLoading(true);
 
-		if (user) {
-			setCurrentUser(user);
-			navigate('/home');
+		try {
+			// console.log('values', values);
+			const user = await logInWithEmailAndPassword(
+				values?.email,
+				values?.password
+			);
+
+			if (user) {
+				setCurrentUser(user);
+				navigate('/home');
+			}
+		} catch (error) {
+			// console.log(error)
+		} finally {
+			setIsLoading(false);
 		}
 	};
 	const handleForgotPassword = () => {
@@ -106,7 +116,7 @@ const LoginForm = () => {
 						variant="primary"
 						className="w-full max-w-none"
 						type="submit"
-						//   isSubmitting={loginMutation?.isLoading}
+						isSubmitting={isLoading}
 					>
 						Login
 					</Button>

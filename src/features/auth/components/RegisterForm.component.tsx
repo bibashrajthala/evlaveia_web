@@ -17,6 +17,7 @@ import {
 	ZConFirmPassword,
 	ZSingleCheckbox,
 } from '../validations/register.validation';
+import { useState } from 'react';
 
 const loginSchema = z
 	.object({
@@ -41,8 +42,10 @@ const defaultValues: TRegisterSchema = {
 	confirmPassword: '',
 	termsAndConditions: false,
 };
-const LoginForm = () => {
+const RegisterForm = () => {
 	const navigate = useNavigate();
+
+	const [isLoading, setIsLoading] = useState(false);
 
 	const methods = useForm<TRegisterSchema>({
 		resolver: zodResolver(loginSchema),
@@ -51,6 +54,7 @@ const LoginForm = () => {
 
 	const onSubmit = async (values: TRegisterSchema) => {
 		// console.log('values', values);
+		setIsLoading(true);
 
 		try {
 			const res = await registerWithEmailAndPassword(
@@ -62,6 +66,8 @@ const LoginForm = () => {
 			if (res) navigate('/email-sent');
 		} catch (error) {
 			// console.log(error)
+		} finally {
+			setIsLoading(false);
 		}
 	};
 	const navigateToTermsAndCondition = () => {
@@ -136,7 +142,7 @@ const LoginForm = () => {
 						variant="primary"
 						className="w-full max-w-none"
 						type="submit"
-						// isSubmitting={registerMutation?.isLoading}
+						isSubmitting={isLoading}
 						disabled={!methods?.watch('termsAndConditions')}
 						title={
 							!methods?.watch('termsAndConditions')
@@ -162,4 +168,4 @@ const LoginForm = () => {
 	);
 };
 
-export default LoginForm;
+export default RegisterForm;

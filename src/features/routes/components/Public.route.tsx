@@ -9,6 +9,8 @@ const PublicRoute = () => {
 
 	const { user } = useContext(UserContext);
 
+	// console.log('user', user);
+
 	const loadingContent = (
 		<div className="flex h-screen w-full items-center justify-center text-center">
 			Loading...
