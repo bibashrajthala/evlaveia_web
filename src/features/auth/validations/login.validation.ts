@@ -9,6 +9,6 @@ export const ZEmail = z
 
 export const ZPassword = z
 	.string()
-	.min(8, { message: 'Password must be atleast 8 characters long.' });
+	.min(6, { message: 'Password must be atleast 6 characters long.' });
 
 export const ZSingleCheckbox = z.boolean().optional();
